@@ -98,3 +98,77 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     '''
     pass
 
+
+
+
+def beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
+    '''Propagates an initial field over a given distance based on the
+    solution of the paraxial wave equation in an inhomogeneous
+    refractive index distribution using the explicit-implicit
+    Crank-Nicolson scheme. All lengths have to be specified in µm.
+
+    Parameters
+    ----------
+        v_in : 1d-array
+            Initial field
+        lam : float
+            Wavelength
+        dx : float
+            Transverse step size
+        n : 1d-array
+            Refractive index distribution
+        nd : float
+            Reference refractive index
+        z_end : float
+            Propagation distance
+        dz : float
+            Step size in propagation direction
+        output_step : int
+            Number of steps between field outputs
+
+    Returns
+    -------
+        v_out : 2d-array
+            Propagated field
+        z : 1d-array
+            z-coordinates of field output
+    '''
+    pass
+
+
+
+
+def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
+    '''Propagates an initial field over a given distance based on the
+    solution of the paraxial wave equation in an inhomogeneous
+    refractive index distribution using the explicit-implicit
+    Crank-Nicolson scheme. All lengths have to be specified in µm.
+
+    Parameters
+    ----------
+        v_in : 1d-array
+            Initial field
+        lam : float
+            Wavelength
+        dx : float
+            Transverse step size
+        n : 1d-array
+            Refractive index distribution
+        nd : float
+            Reference refractive index
+        z_end : float
+            Propagation distance
+        dz : float
+            Step size in propagation direction
+        output_step : int
+            Number of steps between field outputs
+
+    Returns
+    -------
+        v_out : 2d-array
+            Propagated field
+        z : 1d-array
+            z-coordinates of field output
+    '''
+    pass
+

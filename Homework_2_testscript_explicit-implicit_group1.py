@@ -1,4 +1,4 @@
-'''Homework 2, Computational Photonics, SS 2020:  Beam propagation method.
+'''Homework 2, Computational Photonics, SS 2024:  Beam propagation method.
 '''
 
 import numpy as np
