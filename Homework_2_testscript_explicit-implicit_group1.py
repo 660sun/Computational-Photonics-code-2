@@ -2,7 +2,7 @@
 '''
 
 import numpy as np
-from Homework_2_function_headers import waveguide, gauss, beamprop_CN
+from Homework_2_function_headers_group1 import waveguide, gauss, beamprop_CN
 from matplotlib import pyplot as plt
 
 # dark bluered colormap, registers automatically with matplotlib on import
@@ -49,3 +49,13 @@ v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
 # calculation
 v_out, z = beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
 
+# Plot results
+plt.figure()
+plt.pcolormesh(x, z, np.abs(v_out)**2, cmap='bluered_dark')
+plt.xlabel('x [µm]')
+plt.ylabel('z [µm]')
+plt.title('Field intensity distribution in the x-z plane of the waveguide')
+plt.gca().set_aspect('equal')
+cb = plt.colorbar()
+cb.set_label('intensity')
+plt.show()

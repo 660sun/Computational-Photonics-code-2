@@ -2,7 +2,7 @@
 '''
 import numpy as np
 import scipy.sparse as sps
-import scipy.sparse.linalg
+from scipy.sparse.linalg import spsolve
 
 
 def waveguide(xa, xb, Nx, n_cladding, n_core):
@@ -35,15 +35,18 @@ def waveguide(xa, xb, Nx, n_cladding, n_core):
     
     x = np.linspace(-xa/2, xa/2, Nx)
     n = np.zeros(Nx, dtype=float)
-    # step size
-    h = xa/(Nx-1)
     # index distribution
     for i in range(Nx):
         if abs(x[i]) <= xb/2:
             n[i] = n_core
         else:
             n[i] = n_cladding
-    
+    # for i, xi in enumerate(x):
+    #     if abs(xi) <= xb/2:
+    #         n[i] = n_core
+    #     else:
+    #         n[i] = n_cladding
+
     return n, x
 
 
@@ -71,6 +74,9 @@ def gauss(xa, Nx, w):
             Generated coordinate vector
     '''
     
+    # v = np.zeros(Nx, dtype=float)
+    x = np.linspace(-xa/2, xa/2, Nx)
+    v = np.exp(-x**2/w**2)
 
     return v, x
 
@@ -110,6 +116,48 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
             z-coordinates of field output
     '''
     
+    # Basic parameters - wavenumbers
+    k0 = 2*np.pi/lam
+    kd = nd*k0
+    k1 = n*k0
+    k2 = np.ones(len(k1)) * kd
+    # z = np.arange(0, z_end, dz)
+    z = np.linspace(0, z_end, int(z_end/dz) + 1)
+
+    # Construction of the operator matrix L1
+    ## Diagonal elements
+    diagonals_1 = np.zeros((3, len(n)))
+    diagonals_1[0] = np.ones(len(n)) * (-2)
+    diagonals_1[1] = np.ones(len(n)) * 1
+    diagonals_1[-1] = np.ones(len(n)) * 1
+    diag_position_1 = [0, 1, -1]
+    ## Sparse matrix construction
+    L1 = sps.diags(diagonals_1, diag_position_1)
+    L1 = (1j/(2*kd*dx**2)) * L1
+
+    # Construction of the operator matrix L2
+    ## Diagonal elements
+    diagonals_2 = np.zeros((1, len(n)))
+    diagonals_2[0] = (k1**2 - k2**2) / (2*kd)
+    diag_position_2 = [0]
+    ## Sparse matrix construction
+    L2 = sps.diags(diagonals_2, diag_position_2)
+    L2 = 1j*L2
+
+    # Construction of the operator matrix L
+    L = L1 + L2
+
+    # Crank-Nicolson scheme
+    v_out = np.zeros((len(z), len(n)), dtype=complex)
+    for i in range(len(z)):
+        ## Construction of the operator matrix M1
+        M1 = sps.eye(len(n)) - (z[i]/2) * L
+        ## Construction of the operator matrix M2
+        M2 = sps.eye(len(n)) + (z[i]/2) * L
+
+        # Solution of the slowly varying envelope along the propagation direction
+        v_out[i,:] = sps.linalg.spsolve(M1, M2.dot(v_in))
+
     return v_out, z
 
 
