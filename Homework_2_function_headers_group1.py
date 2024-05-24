@@ -148,15 +148,26 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     L = L1 + L2
 
     # Crank-Nicolson scheme
-    v_out = np.zeros((len(z), len(n)), dtype=complex)
-    for i in range(len(z)):
+    # v_out = np.zeros((len(z), len(n)), dtype=complex)
+    # for i in range(len(z)):
+    #     ## Construction of the operator matrix M1
+    #     M1 = sps.eye(len(n)) - (z[i]/2) * L
+    #     ## Construction of the operator matrix M2
+    #     M2 = sps.eye(len(n)) + (z[i]/2) * L
+
+    #     # Solution of the slowly varying envelope along the propagation direction
+    #     v_out[i,:] = sps.linalg.spsolve(M1, M2.dot(v_in))
+    v_out = np.zeros((len(range(0, len(z), output_step)), len(n)), dtype=complex)
+    counter = 0
+    for i in range(0, len(z), output_step):
         ## Construction of the operator matrix M1
         M1 = sps.eye(len(n)) - (z[i]/2) * L
         ## Construction of the operator matrix M2
         M2 = sps.eye(len(n)) + (z[i]/2) * L
 
         # Solution of the slowly varying envelope along the propagation direction
-        v_out[i,:] = sps.linalg.spsolve(M1, M2.dot(v_in))
+        v_out[counter,:] = sps.linalg.spsolve(M1, M2.dot(v_in))
+        counter += 1
 
     return v_out, z
 
