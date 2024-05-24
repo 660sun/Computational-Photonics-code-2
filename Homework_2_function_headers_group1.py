@@ -33,7 +33,18 @@ def waveguide(xa, xb, Nx, n_cladding, n_core):
             Generated coordinate vector
     '''
     
-    pass
+    x = np.linspace(-xa/2, xa/2, Nx)
+    n = np.zeros(Nx, dtype=float)
+    # step size
+    h = xa/(Nx-1)
+    # index distribution
+    for i in range(Nx):
+        if abs(x[i]) <= xb/2:
+            n[i] = n_core
+        else:
+            n[i] = n_cladding
+    
+    return n, x
 
 
 
@@ -59,7 +70,9 @@ def gauss(xa, Nx, w):
         x : 1d-array
             Generated coordinate vector
     '''
-    pass
+    
+
+    return v, x
 
 
 
@@ -96,7 +109,8 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
         z : 1d-array
             z-coordinates of field output
     '''
-    pass
+    
+    return v_out, z
 
 
 
@@ -133,7 +147,8 @@ def beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
         z : 1d-array
             z-coordinates of field output
     '''
-    pass
+    
+    return v_out, z
 
 
 
@@ -170,5 +185,6 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
         z : 1d-array
             z-coordinates of field output
     '''
-    pass
+    
+    return v_out, z
 
