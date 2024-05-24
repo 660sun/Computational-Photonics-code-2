@@ -2,7 +2,7 @@
 '''
 
 import numpy as np
-from Homework_2_function_headers import waveguide, gauss, beamprop_BN
+from Homework_2_function_headers_group1 import waveguide, gauss, beamprop_BN
 from matplotlib import pyplot as plt
 
 # dark bluered colormap, registers automatically with matplotlib on import
@@ -48,3 +48,28 @@ v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
 
 # calculation
 v_out, z = beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
+
+# Plot results - x-z plane
+z = z[::output_step]
+plt.figure()
+plt.pcolormesh(x, z, np.abs(v_out)**2, cmap='bluered_dark')
+plt.axvline(x=-xb/2, color='r', linestyle='--')
+plt.axvline(x=xb/2, color='r', linestyle='--')
+plt.xlabel('x [µm]')
+plt.ylabel('z [µm]')
+plt.title('Field intensity distribution in the x-z plane of the waveguide')
+plt.gca().set_aspect('equal')
+cb = plt.colorbar()
+cb.set_label('intensity')
+plt.show()
+
+# Plot results - x direction
+plt.figure()
+plt.plot(x, np.abs(v_out[0])**2, label='z = 0')
+plt.plot(x, np.abs(v_out[2*output_step])**2, label='z = 1')
+plt.plot(x, np.abs(v_out[6*output_step])**2, label='z = 2')
+plt.xlabel('x [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution in the x direction at different z values')
+plt.legend()
+plt.show()
