@@ -65,9 +65,13 @@ plt.show()
 
 # Plot results - x direction
 plt.figure()
-plt.plot(x, np.abs(v_out[0])**2, label='z = 0')
-plt.plot(x, np.abs(v_out[2*output_step])**2, label='z = 1')
-plt.plot(x, np.abs(v_out[6*output_step])**2, label='z = 2')
+for i in range(0, len(z), 2):
+    plt.plot(x, np.abs(v_out[i])**2, label='z = %d' % z[i])
+# plt.plot(x, np.abs(v_out[0])**2, label='z = 0')
+# plt.plot(x, np.abs(v_out[2*output_step])**2, label='z = z[2]')
+# plt.plot(x, np.abs(v_out[6*output_step])**2, label='z = z[6]')
+plt.axvline(x=-xb/2, color='r', linestyle='--')
+plt.axvline(x=xb/2, color='r', linestyle='--')
 plt.xlabel('x [µm]')
 plt.ylabel('intensity')
 plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
