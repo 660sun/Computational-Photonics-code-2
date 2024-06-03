@@ -48,7 +48,7 @@ v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
 
 # calculation
 v_out, z = beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
-z = z[::output_step]
+# z = z[::output_step]
 for i in range(len(z)):
     v_out[i] = v_out[i]/np.sqrt(np.sum(np.abs(v_out[i])**2)) # normalize power to unity
 

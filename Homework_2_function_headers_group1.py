@@ -121,9 +121,6 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     kd = nd*k0
     k1 = n*k0
     k2 = np.ones(len(k1)) * kd
-    # z = np.linspace(0, z_end, int(z_end/dz) + 1)
-    z = []
-    z.append(0)
 
     # Construction of the operator matrix L1
     ## Diagonal elements
@@ -161,6 +158,7 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     #     v_out[i,:] = sps.linalg.spsolve(M1, M2.dot(v_in))
 
     # Consider output_step with delta_z = z[i]
+    # z = np.linspace(0, z_end, int(z_end/dz) + 1)
     # v_out = np.zeros((len(range(0, len(z), output_step)), len(n)), dtype=complex)
     # counter = 0
     # for i in range(0, len(z), output_step):
@@ -175,6 +173,8 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     #     counter += 1
 
     # Consider output_step with delta_z = dz
+    z = []
+    z.append(0)
     v_out = []
     v_out.append(v_in)
     counter = 1
@@ -337,9 +337,9 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     kd = nd*k0
     k1 = n*k0
     k2 = np.ones(len(k1)) * kd
-    z = np.linspace(0, z_end, int(z_end/dz) + 1)
-    # z = []
-    # z.append(0)
+    # z = np.linspace(0, z_end, int(z_end/dz) + 1)
+    z = []
+    z.append(0)
 
     # Construction of the operator matrix L1
     ## Diagonal elements
@@ -375,30 +375,30 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     #     v_out[i,:] = sps.linalg.spsolve(M, v_in)
 
     # Consider output_step with delta_z = z[i]
-    v_out = np.zeros((len(range(0, len(z), output_step)), len(n)), dtype=complex)
-    counter = 0
-    for i in range(0, len(z), output_step):
-        ## Construction of the operator matrix M
-        M = sps.eye(len(n)) - (z[i]) * L
+    # v_out = np.zeros((len(range(0, len(z), output_step)), len(n)), dtype=complex)
+    # counter = 0
+    # for i in range(0, len(z), output_step):
+    #     ## Construction of the operator matrix M
+    #     M = sps.eye(len(n)) - (z[i]) * L
 
-        # Solution of the slowly varying envelope along the propagation direction
-        v_out[counter,:] = sps.linalg.spsolve(M, v_in)
-        counter += 1
+    #     # Solution of the slowly varying envelope along the propagation direction
+    #     v_out[counter,:] = sps.linalg.spsolve(M, v_in)
+    #     counter += 1
 
     # Consider output_step with delta_z = dz
-    # v_out = []
-    # v_out.append(v_in)
-    # counter = 1
-    # i = 0
-    # for i in range(int(z_end/(dz*output_step)) + 1):
-    #     if z[i] > z_end:
-    #         break
-    #     M1 = sps.eye(len(n)) - (dz) * L
-    #     # M2 = sps.eye(len(n))
-    #     v_out.append(sps.linalg.spsolve(M1, v_out[counter - 1][:]))
-    #     z.append(z[i] + dz*output_step)
-    #     i += 1
-    #     counter += 1
+    v_out = []
+    v_out.append(v_in)
+    counter = 1
+    i = 0
+    for i in range(int(z_end/(dz*output_step)) + 1):
+        if z[i] > z_end:
+            break
+        M1 = sps.eye(len(n)) - (dz) * L
+        # M2 = sps.eye(len(n))
+        v_out.append(sps.linalg.spsolve(M1, v_out[counter - 1][:]))
+        z.append(z[i] + dz*output_step)
+        i += 1
+        counter += 1
 
 
     return v_out, z
