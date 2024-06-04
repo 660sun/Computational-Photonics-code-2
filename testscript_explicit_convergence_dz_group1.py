@@ -82,6 +82,19 @@ plt.title('Operation time for different dz')
 # plt.yscale('log')
 plt.show()
 
+# Plot results - x direction
+plt.figure()
+for i in range(len(dz)):
+    plt.plot(x, field_end[i], label='Nx = %d' % dz[i])
+plt.axvline(x=-xb/2, color='r', linestyle='--')
+plt.axvline(x=xb/2, color='r', linestyle='--')
+plt.xlabel('x [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
+plt.legend()
+plt.show()
+
+
 # Plot of relative error
 plt.figure()
 plt.plot(dz, real_error, 'o-')
@@ -89,5 +102,5 @@ plt.xlabel('dz [µm]')
 plt.ylabel('relative error')
 plt.title('Relative error for different dz')
 # plt.xscale('log')
-# plt.yscale('log')
+plt.yscale('log')
 plt.show()

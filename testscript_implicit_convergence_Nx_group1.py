@@ -38,9 +38,10 @@ n_core  = 1.46      # core refr. index
 # source width
 w       = 5.0       # Gaussian beam width
 
-Nx = np.linspace(201, 301, 10, dtype=int)
+Nx = np.linspace(201, 301, 11, dtype=int)
 operation_time = np.zeros(len(Nx))
 field_end = []
+x_end = []
 for i, Nxi in enumerate(Nx):
     dx      = xa/(Nxi-1) # transverse step size
     # create index distribution
@@ -53,14 +54,15 @@ for i, Nxi in enumerate(Nx):
     v_out, z = beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
     stop = time.time()
     operation_time[i] = stop - start
-    # field_end.append(v_out[-1][:])
-    field_end.append(v_out[-1]/np.sqrt(np.sum(np.abs(v_out[-1])**2)))
+    x_end.append(x)
+    field_end.append(np.abs(v_out[-1][:])**2)
+    # field_end.append(np.abs(v_out[-1]/np.sqrt(np.sum(np.abs(v_out[-1])**2)))**2)
     print("Nx = %s, time = %gs" % (Nxi, stop - start))
 
 # calculate relative error to the value obtained at highest resolution
 real_error = np.zeros(len(Nx))
 for i in range(len(Nx)):
-    real_error[i] = 1 - np.linalg.norm(field_end[i])/np.linalg.norm(field_end[-1]) 
+    real_error[i] = np.abs(1 - np.linalg.norm(field_end[i])/np.linalg.norm(field_end[-1]))
 
 
 # Plot of operation time
@@ -71,6 +73,18 @@ plt.ylabel('operation time [s]')
 plt.title('Operation time for different Nx')
 # plt.xscale('log')
 # plt.yscale('log')
+plt.show()
+
+# Plot results - x direction
+plt.figure()
+for i in range(len(field_end)):
+    plt.plot(x_end[i], field_end[i], label='Nx = %d' % Nx[i])
+plt.axvline(x=-xb/2, color='r', linestyle='--')
+plt.axvline(x=xb/2, color='r', linestyle='--')
+plt.xlabel('x [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
+plt.legend()
 plt.show()
 
 # Plot of relative error

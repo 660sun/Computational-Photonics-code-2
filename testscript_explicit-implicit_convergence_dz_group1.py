@@ -72,7 +72,7 @@ for i, dzi in enumerate(dz):
 # field_end = field_end[np.any(field_end != 0, axis=1)]
 real_error = []
 for i in range(field_end.shape[0]):
-    real_error.append(np.linalg.norm(field_end[0][:] - field_end[i][:]) / np.linalg.norm(field_end[0][:]))
+    real_error.append(np.abs(np.linalg.norm(field_end[0][:] - field_end[i][:]) / np.linalg.norm(field_end[0][:])))
     # real_error.append(np.sum(np.abs(field_end[1][:] - field_end[i][:])) / np.sum(np.abs(field_end[-1][:])))
 
 
@@ -84,6 +84,18 @@ plt.ylabel('operation time [s]')
 plt.title('Operation time for different dz')
 # plt.xscale('log')
 # plt.yscale('log')
+plt.show()
+
+# Plot results - x direction
+plt.figure()
+for i in range(len(dz)):
+    plt.plot(x, field_end[i], label='Nx = %d' % dz[i])
+plt.axvline(x=-xb/2, color='r', linestyle='--')
+plt.axvline(x=xb/2, color='r', linestyle='--')
+plt.xlabel('x [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
+plt.legend()
 plt.show()
 
 # Plot of relative error
