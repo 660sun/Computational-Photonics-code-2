@@ -28,7 +28,7 @@ xa      = 50        # size of computational window
 
 # propagation step size
 dz = 0.5
-output_step = round(1.0/dz)
+output_step = 1
 
 # waveguide parameters
 xb      = 2.0       # size of waveguide
@@ -38,7 +38,7 @@ n_core  = 1.46      # core refr. index
 # source width
 w       = 5.0       # Gaussian beam width
 
-Nx = np.linspace(201, 301, 11, dtype=int)
+Nx = np.linspace(151, 351, 21, dtype=int)
 operation_time = np.zeros(len(Nx))
 field_end = []
 x_end = []
@@ -70,7 +70,7 @@ plt.figure()
 plt.plot(Nx, operation_time, 'o-')
 plt.xlabel('Nx')
 plt.ylabel('operation time [s]')
-plt.title('Operation time for different Nx')
+plt.title('Operation time for different Nx \n Explicit scheme')
 # plt.xscale('log')
 # plt.yscale('log')
 plt.show()
@@ -83,7 +83,7 @@ plt.axvline(x=-xb/2, color='r', linestyle='--')
 plt.axvline(x=xb/2, color='r', linestyle='--')
 plt.xlabel('x [µm]')
 plt.ylabel('intensity')
-plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
+plt.title('Field intensity distribution at far end for different Nx \n Explicit scheme')
 plt.legend()
 plt.show()
 
@@ -92,7 +92,7 @@ plt.figure()
 plt.plot(Nx, real_error, 'o-')
 plt.xlabel('Nx')
 plt.ylabel('relative error')
-plt.title('Relative error for different Nx')
+plt.title('Relative error for different Nx \n Explicit scheme')
 # plt.xscale('log')
 # plt.yscale('log')
 plt.show()
