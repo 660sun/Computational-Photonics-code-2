@@ -38,26 +38,26 @@ n_core  = 1.46      # core refr. index
 # source width
 w       = 5.0       # Gaussian beam width
 
-Nx = np.linspace(151, 351, 21, dtype=int)
+Nx = np.linspace(151, 2151, 101, dtype=int)
 operation_time = np.zeros(len(Nx))
 field_end = []
 x_end = []
 for i, Nxi in enumerate(Nx):
     dx      = xa/(Nxi-1) # transverse step size
+    start = time.time()
     # create index distribution
     n, x = waveguide(xa, xb, Nxi, n_cladding, n_core)
     # create initial field
     v_in, x     = gauss(xa, Nxi, w)
     v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
     # propagate field
-    start = time.time()
     v_out, z = beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
     stop = time.time()
     operation_time[i] = stop - start
     x_end.append(x)
     field_end.append(np.abs(v_out[-1][:])**2)
     # field_end.append(np.abs(v_out[-1]/np.sqrt(np.sum(np.abs(v_out[-1])**2)))**2)
-    print("Nx = %s, time = %gs" % (Nxi, stop - start))
+    # print("Nx = %s, time = %gs" % (Nxi, stop - start))
 
 # calculate relative error to the value obtained at highest resolution
 real_error = np.zeros(len(Nx))
@@ -77,13 +77,17 @@ plt.show()
 
 # Plot results - x direction
 plt.figure()
+counter = 0
 for i in range(len(field_end)):
-    plt.plot(x_end[i], field_end[i], label='Nx = %d' % Nx[i])
+    if counter > len(field_end):
+        break
+    plt.plot(x_end[counter], field_end[counter], label='Nx = %d' % Nx[counter])
+    counter += 10
 plt.axvline(x=-xb/2, color='r', linestyle='--')
 plt.axvline(x=xb/2, color='r', linestyle='--')
 plt.xlabel('x [µm]')
 plt.ylabel('intensity')
-plt.title('Field intensity distribution at far end for different Nx \n Implicit scheme')
+plt.title('Field intensity distribution at far end for different Nx \n Crank-Nicolson scheme')
 plt.legend()
 plt.show()
 
