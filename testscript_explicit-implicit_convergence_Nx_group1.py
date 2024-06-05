@@ -28,7 +28,7 @@ xa      = 50        # size of computational window
 
 # propagation step size
 dz = 0.5
-output_step = 1
+output_step = 2
 
 # waveguide parameters
 xb      = 2.0       # size of waveguide

@@ -27,7 +27,7 @@ nd      = 1.455     # reference index
 xa      = 50        # size of computational window
 Nx      = 251       # number of transverse points
 dx      = xa/(Nx-1) # transverse step size
-output_step = 2     # output step size
+output_step = 1     # output step size
 
 # waveguide parameters
 xb      = 2.0       # size of waveguide

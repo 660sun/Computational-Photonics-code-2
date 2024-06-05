@@ -79,7 +79,7 @@ for i in range(field_end.shape[0]):
 
 # Plot of operation time
 plt.figure()
-plt.plot(dz, operation_time, 'o--')
+plt.plot(dz, operation_time, 'o-')
 plt.xlabel('dz [µm]')
 plt.ylabel('operation time [s]')
 plt.title('Operation time for different dz \n Crank-Nicolson scheme')
@@ -99,7 +99,7 @@ plt.show()
 
 # Plot of relative error
 plt.figure()
-plt.plot(dz, real_error, 'o--')
+plt.plot(dz, real_error, 'o-')
 plt.xlabel('dz [µm]')
 plt.ylabel('relative error')
 plt.title('Relative error for different dz \n Crank-Nicolson scheme')

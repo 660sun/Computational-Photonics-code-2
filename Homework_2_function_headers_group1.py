@@ -180,15 +180,19 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     v_out.append(v_in)
     counter = 1
     i = 0
-    for i in range(int(z_end/(dz*output_step)) + 1):
+    for i in range(int(z_end/dz) + 1):
         if z[i] > z_end:
             break
         M1 = sps.eye(len(n)) - (dz/2) * L
         M2 = sps.eye(len(n)) + (dz/2) * L
         v_out.append(sps.linalg.spsolve(M1, M2.dot(v_out[counter - 1][:])))
-        z.append(z[i] + dz*output_step)
+        z.append(z[i] + dz)
         i += 1
         counter += 1
+    
+    # selection using output_step
+    v_out = v_out[::output_step]
+    z = z[::output_step]
 
     return v_out, z
 
@@ -285,15 +289,19 @@ def beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     v_out.append(v_in)
     counter = 1
     i = 0
-    for i in range(int(z_end/(dz*output_step)) + 1):
+    for i in range(int(z_end/dz) + 1):
         if z[i] > z_end:
             break
         # M1 = sps.eye(len(n))
         M2 = sps.eye(len(n)) + (dz) * L
         v_out.append(M2.dot(v_out[counter - 1][:]))
-        z.append(z[i] + dz*output_step)
+        z.append(z[i] + dz)
         i += 1
         counter += 1
+
+    # selection using output_step
+    v_out = v_out[::output_step]
+    z = z[::output_step]
 
 
     return v_out, z
@@ -393,16 +401,19 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     v_out.append(v_in)
     counter = 1
     i = 0
-    for i in range(int(z_end/(dz*output_step)) + 1):
+    for i in range(int(z_end/dz) + 1):
         if z[i] > z_end:
             break
         M1 = sps.eye(len(n)) - (dz) * L
         # M2 = sps.eye(len(n))
         v_out.append(sps.linalg.spsolve(M1, v_out[counter - 1][:]))
-        z.append(z[i] + dz*output_step)
+        z.append(z[i] + dz)
         i += 1
         counter += 1
 
+    # selection using output_step
+    v_out = v_out[::output_step]
+    z = z[::output_step]
 
     return v_out, z
 
