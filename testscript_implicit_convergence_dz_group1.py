@@ -44,8 +44,7 @@ w       = 5.0       # Gaussian beam width
 v_in, x     = gauss(xa, Nx, w)
 v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
 
-# propagation step size - 31 points logarithmically spaced between 10 and 0.053
-# dz = np.logspace(np.log10(1), np.log10(0.05), 31)
+# propagation step size - points between 1 and 0.01
 # dz = [0.01, 0.0125, 0.016, 0.02, 0.025, 0.04, 0.05, 0.08, 0.1, 0.125, 0.16, 0.2, 0.25, 0.4, 0.5, 0.8, 1.0]
 # dz = [0.01, 0.0125, 0.02, 0.025, 0.04, 0.05, 0.0625, 0.078125, 0.1, 0.125, 0.2, 0.25, 0.4, 0.5, 0.625, 0.78125, 1.0]
 dz = [0.01, 0.0125, 0.016, 0.02, 0.025, 0.04, 0.05, 0.0625, 0.08, 0.1, 0.125, 0.16, 0.2, 0.25, 0.4, 0.5, 0.625, 0.78125, 0.8, 1.0]
@@ -62,11 +61,6 @@ for i, dzi in enumerate(dz):
     print("dz = %6.3f, time = %gs" % (dzi, stop - start))
     field_end[counter][:] = np.abs(v_out[-1][:])**2
     counter += 1
-    # z = z[::output_step]
-    # if abs(z[-1] - z_end) < 1e-6:
-    #     field_end[counter, :] = np.abs(v_out[-1, :])**2
-    #     dz_num.append(dzi)
-    #     counter += 1
 
 # calculate relative error to the value obtained at highest resolution
 real_error = []

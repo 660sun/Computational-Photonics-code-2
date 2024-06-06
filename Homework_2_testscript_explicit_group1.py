@@ -48,15 +48,14 @@ v_in        = v_in/np.sqrt(np.sum(np.abs(v_in)**2)) # normalize power to unity
 
 # calculation
 v_out, z = beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step)
-# z = z[::output_step]
 for i in range(len(z)):
     v_out[i] = v_out[i]/np.sqrt(np.sum(np.abs(v_out[i])**2)) # normalize power to unity
 
 # Plot results - x-z plane
 plt.figure()
 plt.pcolormesh(x, z, np.abs(v_out)**2, cmap='bluered_dark')
-plt.axvline(x=-xb/2, color='r', linestyle='--')
-plt.axvline(x=xb/2, color='r', linestyle='--')
+plt.axvline(x=-xb/2, color='gray', linestyle='--')
+plt.axvline(x=xb/2, color='gray', linestyle='--')
 plt.xlabel('x [µm]')
 plt.ylabel('z [µm]')
 plt.title('Field intensity distribution in the x-z plane of the waveguide \n Explicit scheme')
@@ -67,11 +66,8 @@ plt.show()
 
 # Plot results - x direction
 plt.figure()
-for i in range(0, len(z), 2):
+for i in range(0, len(z), 5):
     plt.plot(x, np.abs(v_out[i])**2, label='z = %d' % z[i])
-# plt.plot(x, np.abs(v_out[0])**2, label='z = 0')
-# plt.plot(x, np.abs(v_out[2*output_step])**2, label='z = 1')
-# plt.plot(x, np.abs(v_out[6*output_step])**2, label='z = 2')
 plt.axvline(x=-xb/2, color='r', linestyle='--')
 plt.axvline(x=xb/2, color='r', linestyle='--')
 plt.xlabel('x [µm]')

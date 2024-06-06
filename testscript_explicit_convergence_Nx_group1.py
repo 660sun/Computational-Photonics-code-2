@@ -71,8 +71,6 @@ plt.plot(Nx, operation_time, 'o-')
 plt.xlabel('Nx')
 plt.ylabel('operation time [s]')
 plt.title('Operation time for different Nx \n Explicit scheme')
-# plt.xscale('log')
-# plt.yscale('log')
 plt.show()
 
 # Plot results - x direction
