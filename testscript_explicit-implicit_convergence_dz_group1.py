@@ -63,12 +63,9 @@ for i, dzi in enumerate(dz):
     counter += 1
 
 # calculate relative error to the value obtained at highest resolution
-# field_end = field_end[np.any(field_end != 0, axis=1)]
 real_error = []
 for i in range(field_end.shape[0]):
     real_error.append(np.abs(np.linalg.norm(field_end[0][:] - field_end[i][:]) / np.linalg.norm(field_end[0][:])))
-    # real_error.append(np.sum(np.abs(field_end[1][:] - field_end[i][:])) / np.sum(np.abs(field_end[-1][:])))
-
 
 # Plot of operation time
 plt.figure()

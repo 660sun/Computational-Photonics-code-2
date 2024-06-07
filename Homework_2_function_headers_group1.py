@@ -131,7 +131,7 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_1 = [0, 1, -1]
     ## Sparse matrix construction
     L1 = sps.diags(diagonals_1, diag_position_1)
-    L1 = (1j/(2*kd*dx**2)) * L1
+    L1 = (-1j/(2*kd*dx**2)) * L1
 
     # Construction of the operator matrix L2
     ## Diagonal elements
@@ -140,7 +140,7 @@ def beamprop_CN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_2 = [0]
     ## Sparse matrix construction
     L2 = sps.diags(diagonals_2, diag_position_2)
-    L2 = 1j*L2
+    L2 = -1j*L2
 
     # Construction of the operator matrix L
     L = L1 + L2
@@ -233,7 +233,7 @@ def beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_1 = [0, 1, -1]
     ## Sparse matrix construction
     L1 = sps.diags(diagonals_1, diag_position_1)
-    L1 = (1j/(2*kd*dx**2)) * L1
+    L1 = (-1j/(2*kd*dx**2)) * L1
 
     # Construction of the operator matrix L2
     ## Diagonal elements
@@ -242,7 +242,7 @@ def beamprop_FN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_2 = [0]
     ## Sparse matrix construction
     L2 = sps.diags(diagonals_2, diag_position_2)
-    L2 = 1j*L2
+    L2 = -1j*L2
 
     # Construction of the operator matrix L
     L = L1 + L2
@@ -335,7 +335,7 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_1 = [0, 1, -1]
     ## Sparse matrix construction
     L1 = sps.diags(diagonals_1, diag_position_1)
-    L1 = (1j/(2*kd*dx**2)) * L1
+    L1 = (-1j/(2*kd*dx**2)) * L1
 
     # Construction of the operator matrix L2
     ## Diagonal elements
@@ -344,7 +344,7 @@ def beamprop_BN(v_in, lam, dx, n, nd,  z_end, dz, output_step):
     diag_position_2 = [0]
     ## Sparse matrix construction
     L2 = sps.diags(diagonals_2, diag_position_2)
-    L2 = 1j*L2
+    L2 = -1j*L2
 
     # Construction of the operator matrix L
     L = L1 + L2
