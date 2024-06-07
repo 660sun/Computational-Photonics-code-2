@@ -76,3 +76,12 @@ plt.ylabel('intensity')
 plt.title('Field intensity distribution in the x direction at different z values \n Crank-Nicolson scheme')
 plt.legend()
 plt.show()
+
+
+# Plot results - z direction at x = 0
+plt.figure()
+plt.plot(z, [np.abs(v[Nx//2])**2 for v in v_out])
+plt.xlabel('z [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution at x = 0 \n Crank-Nicolson scheme')
+plt.show()

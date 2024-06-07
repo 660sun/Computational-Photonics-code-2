@@ -53,14 +53,25 @@ dz = [0.01, 0.0125, 0.016, 0.02, 0.025, 0.04, 0.05, 0.0625, 0.08, 0.1, 0.125, 0.
 operation_time = np.zeros(len(dz))
 field_end = np.zeros((len(dz), Nx))
 counter = 0
+
+plt.figure()
+
 for i, dzi in enumerate(dz):
     start = time.time()
     v_out, z = beamprop_CN(v_in, lam, dx, n, nd,  z_end, dzi, output_step)
     stop = time.time()
     operation_time[i] = stop - start
+    # Plot results - z direction at x = 0
+    plt.plot(z, [np.abs(v[Nx//2])**2 for v in v_out], label=f'dz={dzi:.6f}')
     print("dz = %6.6f, time = %gs" % (dzi, stop - start))
     field_end[counter][:] = np.abs(v_out[-1][:])**2
     counter += 1
+
+plt.xlabel('z [µm]')
+plt.ylabel('intensity')
+plt.title('Field intensity distribution at x = 0 \n Crank-Nicolson scheme')
+plt.legend()
+plt.show()
 
 # calculate relative error to the value obtained at highest resolution
 real_error = []
@@ -93,6 +104,5 @@ plt.plot(dz, real_error, 'o-')
 plt.xlabel('dz [µm]')
 plt.ylabel('relative error')
 plt.title('Relative error for different dz \n Crank-Nicolson scheme')
-# plt.xscale('log')
 plt.yscale('log')
 plt.show()
