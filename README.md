@@ -7,3 +7,8 @@ Group 1.
 ***Abbe School of Photonics***
 
 ***Friedrich-Schiller-Universität Jena***
+
+
+**Notes**:
+
+If the figures does not show in the markdown, here might be an issue with how your Markdown renderer handles HTML. Please try to change the IDE or use Markdown syntax to display the image instead.
