@@ -67,7 +67,7 @@ plt.show()
 
 # Plot results - x direction
 plt.figure()
-for i in range(0, len(z), 5):
+for i in range(0, len(z), 10):
     plt.plot(x, np.abs(v_out[i])**2, label='z = %d' % z[i])
 plt.axvline(x=-xb/2, color='r', linestyle='--')
 plt.axvline(x=xb/2, color='r', linestyle='--')
