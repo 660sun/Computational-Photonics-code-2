@@ -11,4 +11,4 @@ Group 1.
 
 **Notes**:
 
-If the figures does not show in the markdown, here might be an issue with how your Markdown renderer handles HTML. Please try to change the IDE or use Markdown syntax to display the image instead.
+If the figures does not show in the markdown, here might be an issue with how your Markdown renderer handles HTML. Please try to change the IDE or use Markdown syntax to display the image instead. Or just open the whole folder rather than a single *.ipynb* file.
