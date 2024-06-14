@@ -39,7 +39,7 @@ n_core  = 1.46      # core refr. index
 n, x = waveguide(xa, xb, Nx, n_cladding, n_core)
 
 # source width
-w       = 5.0       # Gaussian beam width
+w       = 2.0       # Gaussian beam width
 
 # create initial field
 v_in, x     = gauss(xa, Nx, w)
@@ -104,5 +104,6 @@ plt.plot(dz, real_error, 'o-')
 plt.xlabel('dz [µm]')
 plt.ylabel('relative error')
 plt.title('Relative error for different dz \n Crank-Nicolson scheme')
+plt.xscale('log')
 plt.yscale('log')
 plt.show()

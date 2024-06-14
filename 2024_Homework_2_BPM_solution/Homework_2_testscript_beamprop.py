@@ -10,7 +10,7 @@ import time
 from Homework_1_solution import guided_modes_1DTE
 
 # dark bluered colormap, registers automatically with matplotlib on import
-#import bluered_dark
+import bluered_dark
 
 plt.rcParams.update({
         'figure.figsize': (12/2.54, 9/2.54),

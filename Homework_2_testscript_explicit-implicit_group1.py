@@ -53,7 +53,10 @@ for i in range(len(z)):
 
 # Plot results - x-z plane
 plt.figure()
-plt.pcolormesh(x, z, np.abs(v_out)**2, cmap='bluered_dark')
+# value range for colorbar
+v = np.abs(v_out).max()
+plt.contourf(x, z, np.real(v_out), np.linspace(-v , v, 101), cmap='bluered_dark', zorder=-5)
+# plt.pcolormesh(x, z, np.abs(v_out)**2, cmap='bluered_dark')
 plt.axvline(x=-xb/2, color='gray', linestyle='--')
 plt.axvline(x=xb/2, color='gray', linestyle='--')
 plt.xlabel('x [µm]')
